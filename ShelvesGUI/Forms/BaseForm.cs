@@ -27,6 +27,16 @@ namespace Shelves.GUI.Forms
             set => formTitleLabel.Text = value;
         }
 
+		public override string Text
+		{
+			get => base.Text;
+			set
+			{
+				base.Text = value;
+				Title = base.Text;
+			}
+		}
+
 		protected Colors.ColorPalette ColorPalette { get; private set; }
         #endregion
 
@@ -62,7 +72,7 @@ namespace Shelves.GUI.Forms
         private void BaseInit()
         {
             InitializeComponent();
-            ApplyColorPalette(new Colors.PaletteCollection.BaseDark());
+            ApplyColorPalette(new Colors.PaletteCollection.Base());
             Init();
         }
 

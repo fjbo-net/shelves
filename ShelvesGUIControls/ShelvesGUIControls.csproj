@@ -62,6 +62,12 @@
     <Compile Include="Controls\CrudPanel.Designer.cs">
       <DependentUpon>CrudPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ExtendedTextbox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ExtendedTextbox.Designer.cs">
+      <DependentUpon>ExtendedTextbox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_Entities\DynamicResizableControl.cs" />
     <Compile Include="_Helpers\Responsive.cs" />
@@ -77,6 +83,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CrudPanel.resx">
       <DependentUpon>CrudPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ExtendedTextbox.resx">
+      <DependentUpon>ExtendedTextbox.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

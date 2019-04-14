@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Shelves.BusinessLayer.Parts.Abstract;
 using Shelves.BusinessLayer.Inventory;
 using Shelves.BusinessLayer.Products;
 using Shelves.GUI.Controls;
@@ -61,6 +62,9 @@ namespace Shelves.App
 		private void Dashboard_Load(object sender, EventArgs e)
 		{
 			DefineDynamicResizables();
+
+			IList<Part> parts = Inventory.getParts();
+			PartsCrudPanel.BindTo(ref parts);
 
 			IList<Product> products = Inventory.getProducts();
 			ProductCrudPanel.BindTo(ref products);

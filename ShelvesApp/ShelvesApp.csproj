@@ -46,6 +46,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\GUI\Controls\InhouseDataPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Common\GUI\Controls\InhouseDataPanel.Designer.cs">
+      <DependentUpon>InhouseDataPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\GUI\Controls\OutsourcedDataPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Common\GUI\Controls\OutsourcedDataPanel.Designer.cs">
+      <DependentUpon>OutsourcedDataPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\GUI\Controls\ProductDataPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Common\GUI\Controls\ProductDataPanel.Designer.cs">
+      <DependentUpon>ProductDataPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Common\GUI\Controls\PartsCrudPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -58,11 +76,17 @@
     <Compile Include="Common\GUI\Controls\ProductCrudPanel.Designer.cs">
       <DependentUpon>ProductCrudPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Common\GUI\Forms\AddForm.cs">
+    <Compile Include="Common\GUI\Forms\PartForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Common\GUI\Forms\AddForm.Designer.cs">
-      <DependentUpon>AddForm.cs</DependentUpon>
+    <Compile Include="Common\GUI\Forms\PartForm.Designer.cs">
+      <DependentUpon>PartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\GUI\Forms\ProductForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\GUI\Forms\ProductForm.Designer.cs">
+      <DependentUpon>ProductForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Dashboard.cs">
       <SubType>Form</SubType>
@@ -78,14 +102,26 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Common\GUI\Controls\InhouseDataPanel.resx">
+      <DependentUpon>InhouseDataPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\GUI\Controls\OutsourcedDataPanel.resx">
+      <DependentUpon>OutsourcedDataPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\GUI\Controls\ProductDataPanel.resx">
+      <DependentUpon>ProductDataPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Common\GUI\Controls\PartsCrudPanel.resx">
       <DependentUpon>PartsCrudPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Common\GUI\Controls\ProductCrudPanel.resx">
       <DependentUpon>ProductCrudPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Common\GUI\Forms\AddForm.resx">
-      <DependentUpon>AddForm.cs</DependentUpon>
+    <EmbeddedResource Include="Common\GUI\Forms\PartForm.resx">
+      <DependentUpon>PartForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\GUI\Forms\ProductForm.resx">
+      <DependentUpon>ProductForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>

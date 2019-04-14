@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Shelves.App.Common.GUI.Forms;
 using Shelves.BusinessLayer.Products;
 using Shelves.GUI.Controls;
 using System.Collections;
@@ -19,8 +20,13 @@ namespace Shelves.App.Common.GUI.Controls
 		public ProductCrudPanel()
 		{
 			AddActionButton.Enabled = true;
+			AddActionButton.Click += new EventHandler(DisplayAddDialog);
+			EditActionButton.Click += new EventHandler(DisplayEditDialog);
 			InitializeComponent();
 		}
+
+
+		private ProductForm ProductForm = new ProductForm();
 
 		private IList<Product> DataSource { get; set; }
 
@@ -105,6 +111,47 @@ namespace Shelves.App.Common.GUI.Controls
 		private void ListView_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			UpdateGUI();
+		}
+
+
+		private void DisplayAddDialog(object sender, EventArgs e)
+		{
+			//AddPartForm.Text = "Add Part";
+			//AddPartForm.ShowDialog();
+			//if (AddPartForm.DialogResult == DialogResult.OK)
+			//{
+			//	Add(AddPartForm.Part);
+			//	AddPartForm.Reset();
+			//}
+			ProductForm.Text = "Add Part";
+			ProductForm.ShowDialog();
+			if(ProductForm.DialogResult == DialogResult.OK)
+			{
+				Add(ProductForm.Product);
+				ProductForm.Reset();
+			}
+		}
+
+		private void DisplayEditDialog(object sender, EventArgs e)
+		{
+			//AddPartForm.Text = "Edit Part";
+			//AddPartForm.Part = this[ListView.SelectedIndices[0]];
+			//AddPartForm.ShowDialog();
+
+			//if (AddPartForm.DialogResult == DialogResult.OK)
+			//{
+			//	this[ListView.SelectedIndices[0]] = AddPartForm.Part;
+			//	AddPartForm.Reset();
+			//}
+			ProductForm.Text = "Edit Product";
+			ProductForm.Product = this[ListView.SelectedIndices[0]];
+			ProductForm.ShowDialog();
+
+			if(ProductForm.DialogResult == DialogResult.OK)
+			{
+				this[ListView.SelectedIndices[0]] = ProductForm.Product;
+				ProductForm.Reset();
+			}
 		}
 	}
 }

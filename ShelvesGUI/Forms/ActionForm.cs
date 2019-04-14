@@ -39,6 +39,6 @@ namespace Shelves.GUI.Forms
             ApplyColorPalette();
         }
 
-        private void CloseButton_Click(object sender, EventArgs e) => Close();
+        protected virtual void CloseButton_Click(object sender, EventArgs e) => Close();
     }
 }

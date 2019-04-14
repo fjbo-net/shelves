@@ -7,7 +7,12 @@ namespace Shelves.BusinessLayer.Parts
 		public int machineID;
 
 
-		public void setMachineID(int newMachineID) {}
+		public void setMachineID(int newMachineID) => machineID = newMachineID;
+		public void setMachineID(string newMachineID)
+		{
+			int newValue;
+			if (int.TryParse(newMachineID, out newValue)) setMachineID(newValue);
+		}
 		public int getMachineID() => machineID;
 
 

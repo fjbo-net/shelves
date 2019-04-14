@@ -54,7 +54,7 @@
             this.formTitleLabel.Name = "formTitleLabel";
             this.formTitleLabel.Size = new System.Drawing.Size(71, 31);
             this.formTitleLabel.TabIndex = 1;
-            this.formTitleLabel.Text = "Title";
+            this.formTitleLabel.Text = "Label";
             // 
             // AppTitleLabel
             // 

@@ -48,8 +48,19 @@ namespace Shelves.App.Common.GUI.Forms
 
 		public Part Part {
 			get {
-				return (TabControl.SelectedIndex == (int)PartTab.Inhouse) ? (Part)inHousePartDataPanel1.Part : OutsourcedDataPanel.Part;
+				if(CanSwitchPartType)
+				{
+					return GetPartByTabPage(TabControl.SelectedTab);
+				} else
+				{
+					foreach(TabPage page in TabControl.TabPages)
+					{
+						if (page.Enabled) return GetPartByTabPage(page);
+					}
+					return inHousePartDataPanel1.Part;
+				}
 			}
+
 			set
 			{
 				if (value is Inhouse)
@@ -64,6 +75,20 @@ namespace Shelves.App.Common.GUI.Forms
 				}
 				else return;
 			}
+		}
+
+		private Part GetPartByTabPage(TabPage page)
+		{
+			switch(TabControl.TabPages.IndexOf(page))
+			{
+				case (int)PartTab.Outsourced:
+					return OutsourcedDataPanel.Part;
+				case (int)PartTab.Inhouse:
+					return inHousePartDataPanel1.Part;
+				default:
+					return new Inhouse();
+			}
+
 		}
 
 
@@ -97,7 +122,6 @@ namespace Shelves.App.Common.GUI.Forms
 		private void SaveActionButton_Click(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.OK;
-			CanSwitchPartType = true;
 			this.Hide();
 		}
 	}

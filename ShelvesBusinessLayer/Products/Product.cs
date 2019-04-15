@@ -23,6 +23,7 @@ namespace Shelves.BusinessLayer.Products
 				new ValidationCondition<int>( inStock => inStock >= this.min, "Inventory level must be greater or equal to the minimum stock amount."),
 				new ValidationCondition<int>( inStock => inStock <= this.max, "Inventory level must be less or equal to the maximum stock amount.")
 			};
+			setID(++Product.LastId);
 		}
 
 		public Product(int id, string name, int min, int max, int inStock, double price) : this()
@@ -67,6 +68,7 @@ namespace Shelves.BusinessLayer.Products
 
 			return productDataTable;
 		}
+		private static int LastId = 0;
 		#endregion
 
 

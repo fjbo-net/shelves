@@ -78,6 +78,16 @@ namespace Shelves.GUI.Controls.Controls
 			}
 			Console.WriteLine($"Key pressed '{e.KeyChar}' [{(int)e.KeyChar}]");
 		}
+
+		[Bindable(true)]
+		[Browsable(true)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		[EditorBrowsable(EditorBrowsableState.Always)]
+		protected new bool Enabled
+		{
+			get => _textbox.Enabled;
+			set => _textbox.Enabled  = value;
+		}
 	}
 
 	public enum ExtendedTextboxType

@@ -29,6 +29,7 @@ namespace Shelves.BusinessLayer.Parts.Abstract
 		public static readonly List<ValidationCondition<int>> MaxValidationConditions = new List<ValidationCondition<int>>() {
 			new ValidationCondition<int>(max => max > 0, "Maximum value must be greater than zero")
 		};
+		protected static int LastId = 0;
 		#endregion
 
 
@@ -154,6 +155,7 @@ namespace Shelves.BusinessLayer.Parts.Abstract
 				new ValidationCondition<int>( inStock => inStock >= this.min, "Inventory level must be greater or equal to the minimum stock amount."),
 				new ValidationCondition<int>( inStock => inStock <= this.max, "Inventory level must be less or equal to the maximum stock amount.")
 			};
+			this.setPartID(++Part.LastId);
 		}
 		#endregion
 	}

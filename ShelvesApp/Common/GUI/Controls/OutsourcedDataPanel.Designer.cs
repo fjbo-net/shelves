@@ -100,6 +100,7 @@
 			// IdExtendedTextbox
 			// 
 			this.IdExtendedTextbox.BackColor = System.Drawing.Color.Transparent;
+			this.IdExtendedTextbox.Enabled = false;
 			this.IdExtendedTextbox.Label = "ID";
 			this.IdExtendedTextbox.Location = new System.Drawing.Point(3, 17);
 			this.IdExtendedTextbox.Name = "IdExtendedTextbox";

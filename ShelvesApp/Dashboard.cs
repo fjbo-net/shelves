@@ -29,7 +29,7 @@ namespace Shelves.App
 		}
 
 		#region Properties
-		private Inventory Inventory = new Inventory();
+		private Inventory Inventory => Inventory.Instance;
 		private DataTable productData;
 		#endregion
 

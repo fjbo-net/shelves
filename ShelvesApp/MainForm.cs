@@ -17,7 +17,7 @@ namespace Shelves.App
 {
 	public partial class MainForm : Form
 	{
-		private Inventory inventory = new Inventory();
+		private Inventory inventory = Inventory.Instance;
 		private DataTable productData;
 
         private List<DynamicResizableControl> DynamicResizables = new List<DynamicResizableControl>();

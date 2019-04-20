@@ -40,6 +40,7 @@ namespace Shelves.App.Common.GUI.Forms
 		}
 
 		public void Reset() => ProductDataPanel.Reset();
+		public void ResetGui() => ProductDataPanel.ResetGui();
 
 		protected override void CloseButton_Click(object sender, EventArgs e)
 		{
@@ -48,7 +49,7 @@ namespace Shelves.App.Common.GUI.Forms
 			this.Hide();
 		}
 
-		private void ResetActionBUtton_Click(object sender, EventArgs e) => ProductDataPanel.Reset();
+		private void ResetActionBUtton_Click(object sender, EventArgs e) => ResetGui();
 
 		private void SaveActionButton_Click(object sender, EventArgs e)
 		{

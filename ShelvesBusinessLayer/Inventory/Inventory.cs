@@ -9,6 +9,12 @@ namespace Shelves.BusinessLayer.Inventory
 {
     public class Inventory
     {
+		private Inventory() { }
+
+
+		public static Inventory Instance = new Inventory();
+		
+
 		private List<Product> Products = new List<Product>();
 		private List<Part> allParts = new List<Part>();
 

@@ -65,9 +65,15 @@ namespace Shelves.App.Common.GUI.Controls
 			MachineIdExtendedTextbox.Text = _part.getMachineID().ToString();
 		}
 
-		public void Reset()
+		public void Reset() => Part = new Inhouse();
+
+		public void ResetGui()
 		{
-			Part = new Inhouse();
+			int existingId = _part != null ? _part.getID() : 0;
+			Inhouse newPart = new Inhouse();
+			if (existingId != 0) newPart.setID(existingId);
+
+			Part = newPart;
 		}
 
 

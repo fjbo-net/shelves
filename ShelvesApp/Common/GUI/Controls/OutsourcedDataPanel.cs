@@ -65,11 +65,16 @@ namespace Shelves.App.Common.GUI.Controls
 			CompanyNameExtendedTextbox.Text = _part.getCompanyName();
 		}
 
-		public void Reset()
-		{
-			Part = new Outsourced();
-		}
+		public void Reset() => Part = new Outsourced();
 
+		public void ResetGui()
+		{
+			int existingId = _part != null ? _part.getID() : 0;
+			Outsourced newPart = new Outsourced();
+			if (existingId != 0) newPart.setID(existingId);
+
+			Part = newPart;
+		}
 
 		public ValidationResult Validate()
 		{

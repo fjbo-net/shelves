@@ -108,6 +108,12 @@ namespace Shelves.App.Common.GUI.Forms
 			OutsourcedDataPanel.Reset();
 		}
 
+		public void ResetGui()
+		{
+			inHousePartDataPanel1.ResetGui();
+			OutsourcedDataPanel.ResetGui();
+		}
+
 
 		protected override void CloseButton_Click(object sender, EventArgs e)
 		{
@@ -117,7 +123,7 @@ namespace Shelves.App.Common.GUI.Forms
 			this.Hide();
 		}
 
-		private void ResetActionButton_Click(object sender, EventArgs e) => Reset();
+		private void ResetActionButton_Click(object sender, EventArgs e) => ResetGui();
 
 		private void SaveActionButton_Click(object sender, EventArgs e)
 		{

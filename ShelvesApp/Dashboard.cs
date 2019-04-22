@@ -23,7 +23,9 @@ namespace Shelves.App
 		public Dashboard()
 		{
 			WindowState = FormWindowState.Maximized;
-			Inventory.addProducts(new List<Product> { new Product(1,"Product 1", 5, 100, 20, 5.00), new Product(2, "Product 2", 5, 100, 20, 10.00)});
+			Inventory.addProducts(new List<Product> {
+				new Product(1,"Product 1", 5, 100, 20, 5.00),
+				new Product(2, "Product 2", 5, 100, 20, 10.00)});
 			InitializeComponent();
 			Init();
 		}
@@ -39,44 +41,46 @@ namespace Shelves.App
 			foreach (CrudPanel panel in crudPanels)
 			{
 				DynamicResizableControl resizable = new DynamicResizableControl(panel, this);
-				int layoutPanelPadding = FlowLayoutPanel.Padding.Left
-										+ FlowLayoutPanel.Padding.Right,
-
-					layoutPanelMargin = FlowLayoutPanel.Margin.Left
-										+ FlowLayoutPanel.Margin.Right,
-
-					panelPadding =	panel.Padding.Left
-									+ panel.Padding.Right,
-
-					panelMargin =	panel.Margin.Left
-									+ panel.Margin.Right;
 
 				resizable.AddResizingRule(
 					Dimension.Width,
 					width => (int)	((FlowLayoutPanel.Width -
-										(layoutPanelPadding
-										+ layoutPanelPadding
-										+ panelMargin
-										+ panelPadding))),
+										(GetHorizontalMargin(FlowLayoutPanel)
+										+ GetHorizontalPadding(FlowLayoutPanel)
+										+ GetHorizontalMargin(panel)
+										+ GetHorizontalPadding(panel)))),
 					SizeMode.Small);
 
 				resizable.AddResizingRule
 					(Dimension.Width,
-					width => (int)	((FlowLayoutPanel.Width -
-										(layoutPanelPadding
-										+ layoutPanelMargin
-										+ panelMargin
-										+ panelPadding))),
+					width => (int)((FlowLayoutPanel.Width -
+										(GetHorizontalMargin(FlowLayoutPanel)
+										+ GetHorizontalPadding(FlowLayoutPanel)
+										+ GetHorizontalMargin(panel)
+										+ GetHorizontalPadding(panel)))),
 					SizeMode.Medium);
 
 				resizable.AddResizingRule
 					(Dimension.Width,
 					width => (int)	((FlowLayoutPanel.Width -
-										(layoutPanelPadding
-										+ layoutPanelMargin
-										+ panelMargin
-										+ panelPadding)) - 2)
+										(GetHorizontalMargin(FlowLayoutPanel)
+										+ GetHorizontalPadding(FlowLayoutPanel)
+										+ GetHorizontalMargin(panel)
+										+ GetHorizontalPadding(panel))) - 6)
 									/ crudPanels.Count);
+
+				// Vertical Resizing gets a little tricky when FlowLayoutPanel
+				// is shorter than it's contents (i.e. when resizing from a larger
+				// window size to a smaller window size)
+
+				resizable.AddResizingRule
+					(Dimension.Height,
+					height => (int)(FlowLayoutPanel.ClientSize.Height -
+										(GetVerticalPadding(FlowLayoutPanel)
+										+ GetVerticalMargin(FlowLayoutPanel)
+										+ GetVerticalPadding(panel)
+										+ GetVerticalMargin(panel))));
+
 				base.DynamicResizables.Add(resizable);
 			}
 

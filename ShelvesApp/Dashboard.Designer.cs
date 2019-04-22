@@ -43,7 +43,7 @@
 			// CloseButton
 			// 
 			this.CloseButton.FlatAppearance.BorderSize = 0;
-			this.CloseButton.Location = new System.Drawing.Point(2769, 8);
+			this.CloseButton.Location = new System.Drawing.Point(933, 8);
 			// 
 			// headerPanel
 			// 

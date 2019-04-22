@@ -39,9 +39,44 @@ namespace Shelves.App
 			foreach (CrudPanel panel in crudPanels)
 			{
 				DynamicResizableControl resizable = new DynamicResizableControl(panel, this);
-				resizable.AddResizingRule(Dimension.Width, width => (int)( (FlowLayoutPanel.Width-(FlowLayoutPanel.Padding.Left + FlowLayoutPanel.Padding.Right + FlowLayoutPanel.Margin.Left + FlowLayoutPanel.Margin.Right + panel.Margin.Left + panel.Margin.Right + panel.Padding.Left + panel.Padding.Right))), SizeMode.Small);
-				resizable.AddResizingRule(Dimension.Width, width => (int)((FlowLayoutPanel.Width - (FlowLayoutPanel.Padding.Left + FlowLayoutPanel.Padding.Right + FlowLayoutPanel.Margin.Left + FlowLayoutPanel.Margin.Right + panel.Margin.Left + panel.Margin.Right + panel.Padding.Left + panel.Padding.Right))), SizeMode.Medium);
-				resizable.AddResizingRule(Dimension.Width, width => (int)((FlowLayoutPanel.Width - (FlowLayoutPanel.Padding.Left + FlowLayoutPanel.Padding.Right + FlowLayoutPanel.Margin.Left + FlowLayoutPanel.Margin.Right + panel.Margin.Left + panel.Margin.Right + panel.Padding.Left + panel.Padding.Right))) / crudPanels.Count);
+				int layoutPanelPadding = FlowLayoutPanel.Padding.Left
+										+ FlowLayoutPanel.Padding.Right,
+
+					layoutPanelMargin = FlowLayoutPanel.Margin.Left
+										+ FlowLayoutPanel.Margin.Right,
+
+					panelPadding =	panel.Padding.Left
+									+ panel.Padding.Right,
+
+					panelMargin =	panel.Margin.Left
+									+ panel.Margin.Right;
+
+				resizable.AddResizingRule(
+					Dimension.Width,
+					width => (int)	((FlowLayoutPanel.Width -
+										(layoutPanelPadding
+										+ layoutPanelPadding
+										+ panelMargin
+										+ panelPadding))),
+					SizeMode.Small);
+
+				resizable.AddResizingRule
+					(Dimension.Width,
+					width => (int)	((FlowLayoutPanel.Width -
+										(layoutPanelPadding
+										+ layoutPanelMargin
+										+ panelMargin
+										+ panelPadding))),
+					SizeMode.Medium);
+
+				resizable.AddResizingRule
+					(Dimension.Width,
+					width => (int)	((FlowLayoutPanel.Width -
+										(layoutPanelPadding
+										+ layoutPanelMargin
+										+ panelMargin
+										+ panelPadding)) - 2)
+									/ crudPanels.Count);
 				base.DynamicResizables.Add(resizable);
 			}
 

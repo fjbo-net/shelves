@@ -62,11 +62,23 @@
     <Compile Include="Controls\CrudPanel.Designer.cs">
       <DependentUpon>CrudPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CrudPanelWithSearchBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CrudPanelWithSearchBox.Designer.cs">
+      <DependentUpon>CrudPanelWithSearchBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ExtendedTextbox.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ExtendedTextbox.Designer.cs">
       <DependentUpon>ExtendedTextbox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SearchBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SearchBox.Designer.cs">
+      <DependentUpon>SearchBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_Entities\DynamicResizableControl.cs" />
@@ -84,8 +96,14 @@
     <EmbeddedResource Include="Controls\CrudPanel.resx">
       <DependentUpon>CrudPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CrudPanelWithSearchBox.resx">
+      <DependentUpon>CrudPanelWithSearchBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ExtendedTextbox.resx">
       <DependentUpon>ExtendedTextbox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SearchBox.resx">
+      <DependentUpon>SearchBox.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

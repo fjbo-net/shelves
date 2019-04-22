@@ -15,9 +15,9 @@ using Shelves.App.Common.GUI.Forms;
 
 namespace Shelves.App.Common.GUI.Controls
 {
-	public partial class PartsCrudPanel : CrudPanel, IList<Part>
+	public partial class PartsCrudPanel : CrudPanelWithSearchBox, IList<Part>
 	{
-		private PartForm AddPartForm = new PartForm();
+		protected PartForm AddPartForm = new PartForm();
 
 		public PartsCrudPanel()
 		{
@@ -27,7 +27,7 @@ namespace Shelves.App.Common.GUI.Controls
 			InitializeComponent();
 		}
 
-		private IList<Part> DataSource { get; set; }
+		protected IList<Part> DataSource { get; set; }
 
 		public int Count => DataSource.Count;
 
@@ -93,10 +93,10 @@ namespace Shelves.App.Common.GUI.Controls
 			UpdateGUI();
 		}
 
-		private void SyncListView()
+		private void SyncListView(IList<Part> dataSource = null)
 		{
 			ListView.Items.Clear();
-			foreach (var part in DataSource)
+			foreach (var part in dataSource ?? DataSource)
 			{
 				ListViewItem item = part.ToListViewItem();
 				ListView.Items.Add(item);

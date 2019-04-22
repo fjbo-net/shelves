@@ -28,57 +28,64 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.ProductIDColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ProductNameColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.InventoryLevelColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.PriceColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.HeaderPanel.SuspendLayout();
-            this.ContentPanel.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // HeadingLabel
-            // 
-            this.HeadingLabel.Size = new System.Drawing.Size(213, 25);
-            this.HeadingLabel.Text = "Product CRUD Panel";
-            // 
-            // ListView
-            // 
-            this.ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.ProductIDColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.ProductNameColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.InventoryLevelColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.PriceColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.HeaderPanel.SuspendLayout();
+			this.ContentPanel.SuspendLayout();
+			this.SuspendLayout();
+			// 
+			// ContentPanel
+			// 
+			this.ContentPanel.Size = new System.Drawing.Size(480, 382);
+			// 
+			// HeadingLabel
+			// 
+			this.HeadingLabel.Size = new System.Drawing.Size(213, 25);
+			this.HeadingLabel.Text = "Product CRUD Panel";
+			// 
+			// ListView
+			// 
+			this.ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ProductIDColumnHeader,
             this.ProductNameColumnHeader,
             this.InventoryLevelColumnHeader,
             this.PriceColumnHeader});
-            this.ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Clickable;
-            this.ListView.SelectedIndexChanged += new System.EventHandler(this.ListView_SelectedIndexChanged);
-            // 
-            // ProductIDColumnHeader
-            // 
-            this.ProductIDColumnHeader.Text = "Product ID";
-            this.ProductIDColumnHeader.Width = 94;
-            // 
-            // ProductNameColumnHeader
-            // 
-            this.ProductNameColumnHeader.Text = "Product Name";
-            this.ProductNameColumnHeader.Width = 134;
-            // 
-            // InventoryLevelColumnHeader
-            // 
-            this.InventoryLevelColumnHeader.Text = "Inventory Level";
-            this.InventoryLevelColumnHeader.Width = 123;
-            // 
-            // PriceColumnHeader
-            // 
-            this.PriceColumnHeader.Text = "Price per Unit";
-            this.PriceColumnHeader.Width = 119;
-            // 
-            // ProductCrudPanel
-            // 
-            this.Name = "ProductCrudPanel";
-            this.Text = "Product CRUD Panel";
-            this.HeaderPanel.ResumeLayout(false);
-            this.HeaderPanel.PerformLayout();
-            this.ContentPanel.ResumeLayout(false);
-            this.ResumeLayout(false);
+			this.ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Clickable;
+			this.ListView.Size = new System.Drawing.Size(480, 332);
+			this.ListView.SelectedIndexChanged += new System.EventHandler(this.ListView_SelectedIndexChanged);
+			// 
+			// ProductIDColumnHeader
+			// 
+			this.ProductIDColumnHeader.Text = "Product ID";
+			this.ProductIDColumnHeader.Width = 120;
+			// 
+			// ProductNameColumnHeader
+			// 
+			this.ProductNameColumnHeader.Text = "Product Name";
+			this.ProductNameColumnHeader.Width = 120;
+			// 
+			// InventoryLevelColumnHeader
+			// 
+			this.InventoryLevelColumnHeader.Text = "Inventory Level";
+			this.InventoryLevelColumnHeader.Width = 120;
+			// 
+			// PriceColumnHeader
+			// 
+			this.PriceColumnHeader.Text = "Price per Unit";
+			this.PriceColumnHeader.Width = 120;
+			// 
+			// ProductCrudPanel
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.Name = "ProductCrudPanel";
+			this.Size = new System.Drawing.Size(480, 450);
+			this.Text = "Product CRUD Panel";
+			this.HeaderPanel.ResumeLayout(false);
+			this.HeaderPanel.PerformLayout();
+			this.ContentPanel.ResumeLayout(false);
+			this.ResumeLayout(false);
 
 		}
 

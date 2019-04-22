@@ -15,7 +15,7 @@ using System.Collections;
 
 namespace Shelves.App.Common.GUI.Controls
 {
-	public partial class ProductCrudPanel : CrudPanel, IList<Product>
+	public partial class ProductCrudPanel : CrudPanelWithSearchBox, IList<Product>
 	{
 		public ProductCrudPanel()
 		{
@@ -24,7 +24,6 @@ namespace Shelves.App.Common.GUI.Controls
 			EditActionButton.Click += new EventHandler(DisplayEditDialog);
 			InitializeComponent();
 		}
-
 
 		private ProductForm ProductForm = new ProductForm();
 

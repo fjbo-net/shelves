@@ -36,6 +36,11 @@
 			this.ContentPanel.SuspendLayout();
 			this.SuspendLayout();
 			// 
+			// ContentPanel
+			// 
+			this.ContentPanel.Location = new System.Drawing.Point(0, 40);
+			this.ContentPanel.Size = new System.Drawing.Size(480, 360);
+			// 
 			// ListView
 			// 
 			this.ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -44,6 +49,7 @@
             this.PartInventoryLevelColumnHeader,
             this.PartPriceColumnHeader});
 			this.ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Clickable;
+			this.ListView.Size = new System.Drawing.Size(480, 310);
 			this.ListView.SelectedIndexChanged += new System.EventHandler(this.ListView_SelectedIndexChanged);
 			// 
 			// PartIDColumnHeader
@@ -71,6 +77,7 @@
 			// 
 			// PartsCrudPanel
 			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.Name = "PartsCrudPanel";
 			this.HeaderPanel.ResumeLayout(false);
 			this.HeaderPanel.PerformLayout();

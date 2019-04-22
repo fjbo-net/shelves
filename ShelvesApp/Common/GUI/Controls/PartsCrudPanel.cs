@@ -21,7 +21,7 @@ namespace Shelves.App.Common.GUI.Controls
 
 		public PartsCrudPanel()
 		{
-			AddActionButton.Enabled = true;
+			AddActionButton.Enabled = false;
 			AddActionButton.Click += new EventHandler(DisplayAddPartDialog);
 			EditActionButton.Click += new EventHandler(DisplayEditPartDialog);
 			InitializeComponent();
@@ -84,7 +84,11 @@ namespace Shelves.App.Common.GUI.Controls
 		public void BindTo(ref IList<Part> Parts)
 		{
 			DataSource = Parts;
+
+			if(DataSource == null) return;
+
 			SyncListView();
+			AddActionButton.Enabled = true;
 		}
 
 		protected override void Delete()

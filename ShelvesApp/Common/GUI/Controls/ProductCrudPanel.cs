@@ -19,7 +19,7 @@ namespace Shelves.App.Common.GUI.Controls
 	{
 		public ProductCrudPanel()
 		{
-			AddActionButton.Enabled = true;
+			AddActionButton.Enabled = false;
 			AddActionButton.Click += new EventHandler(DisplayAddDialog);
 			EditActionButton.Click += new EventHandler(DisplayEditDialog);
 			InitializeComponent();
@@ -80,7 +80,17 @@ namespace Shelves.App.Common.GUI.Controls
 		public void BindTo(ref IList<Product> products)
 		{
 			DataSource = products;
-			SyncListView();
+
+			if (DataSource == null)
+			{
+				AddActionButton.Enabled = false;
+				return;
+			} else
+			{
+				SyncListView();
+				AddActionButton.Enabled = true;
+			}
+			
 		}
 
 		protected override void Delete()
@@ -115,14 +125,7 @@ namespace Shelves.App.Common.GUI.Controls
 
 		private void DisplayAddDialog(object sender, EventArgs e)
 		{
-			//AddPartForm.Text = "Add Part";
-			//AddPartForm.ShowDialog();
-			//if (AddPartForm.DialogResult == DialogResult.OK)
-			//{
-			//	Add(AddPartForm.Part);
-			//	AddPartForm.Reset();
-			//}
-			ProductForm.Text = "Add Part";
+			ProductForm.Text = "Add Product";
 			ProductForm.ShowDialog();
 			if(ProductForm.DialogResult == DialogResult.OK)
 			{
@@ -133,15 +136,6 @@ namespace Shelves.App.Common.GUI.Controls
 
 		private void DisplayEditDialog(object sender, EventArgs e)
 		{
-			//AddPartForm.Text = "Edit Part";
-			//AddPartForm.Part = this[ListView.SelectedIndices[0]];
-			//AddPartForm.ShowDialog();
-
-			//if (AddPartForm.DialogResult == DialogResult.OK)
-			//{
-			//	this[ListView.SelectedIndices[0]] = AddPartForm.Part;
-			//	AddPartForm.Reset();
-			//}
 			ProductForm.Text = "Edit Product";
 			ProductForm.Product = this[ListView.SelectedIndices[0]];
 			ProductForm.ShowDialog();

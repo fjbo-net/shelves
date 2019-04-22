@@ -42,18 +42,20 @@ namespace Shelves.GUI.Controls.Entities
             FitHeight(referenceHeight, sizeMode);
         }
 
-        public void FitWidth(int referenceWidth, SizeMode sizeMode = SizeMode.Full)
+        public void FitWidth(int referenceWidth, SizeMode sizeMode = SizeMode.All)
         {
-            foreach (ResizingRule currentRule in ResizingRules.Where(rule =>
-                rule.SizeMode == sizeMode && rule.Dimension == Dimension.Width))
+            foreach (ResizingRule currentRule in ResizingRules
+				.Where(rule =>	(rule.SizeMode == sizeMode ||
+								rule.SizeMode == SizeMode.All)
+								&& rule.Dimension == Dimension.Width))
             {
                 Control.Size = new System.Drawing.Size(currentRule.Rule(referenceWidth), Control.Bounds.Height);
             }
         }
 
-        public void FitHeight(int referenceHeight, SizeMode sizeMode = SizeMode.Full)
+        public void FitHeight(int referenceHeight, SizeMode sizeMode = SizeMode.All)
         {
-            foreach (ResizingRule currentRule in ResizingRules.Where(rule => rule.SizeMode == sizeMode && rule.Dimension == Dimension.Height)) Control.Height = currentRule.Rule(referenceHeight);
+            foreach (ResizingRule currentRule in ResizingRules.Where(rule => (rule.SizeMode == sizeMode || rule.SizeMode == SizeMode.All) && rule.Dimension == Dimension.Height)) Control.Height = currentRule.Rule(referenceHeight);
         }
     }
 
@@ -69,7 +71,7 @@ namespace Shelves.GUI.Controls.Entities
         public Dimension Dimension { get; }
         public Func<int, int> Rule { get; }
 
-        public ResizingRule(Dimension dimension, Func<int, int> rule, SizeMode sizeMode = SizeMode.Full)
+		public ResizingRule(Dimension dimension, Func<int, int> rule, SizeMode sizeMode = SizeMode.All)
         {
             Dimension = dimension;
             SizeMode = sizeMode;
@@ -77,6 +79,6 @@ namespace Shelves.GUI.Controls.Entities
         }
     }
 
-    public enum SizeMode { Small, Medium, Full };
+    public enum SizeMode { All, Small, Medium, Full };
     public enum Dimension { Width, Height };
 }

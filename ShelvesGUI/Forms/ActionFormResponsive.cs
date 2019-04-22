@@ -25,6 +25,16 @@ namespace Shelves.GUI.Forms
 		#endregion
 
 		#region Mathods
+		protected static int GetVerticalPadding(Control control)
+			=> control.Padding.Left + control.Padding.Right;
+		protected static int GetHorizontalPadding(Control control)
+			=> control.Padding.Top + control.Padding.Bottom;
+		protected static int GetVerticalMargin(Control control)
+			=> control.Margin.Left + control.Padding.Right;
+		protected static int GetHorizontalMargin(Control control)
+			=> control.Margin.Top + control.Padding.Bottom;
+
+
 		public virtual List<DynamicResizableControl> DynamicResizables { get; set; } = new List<DynamicResizableControl>();
 
 		public virtual void DefineDynamicResizables()

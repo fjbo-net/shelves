@@ -20,7 +20,6 @@ namespace Shelves.BusinessLayer.Inventory
 		private List<Part> allParts = new List<Part>();
 
 		public void addProduct(Product newProduct) {
-			// TODO :: FJBO: Implement validation for this method.
 			this.Products.Add(newProduct);
 		}
 		public void addProducts(IEnumerable<Product> newProducts)
@@ -57,14 +56,24 @@ namespace Shelves.BusinessLayer.Inventory
 		}
 
 		public void updateProduct(int ProductId, Product updatedProduct) {
-			// TODO :: FJBO: implement validation for this method.
+			Product currentProduct = null;
 
+			if (ProductId < 0 || ProductId >= Products.Count) return;
+
+			try
+			{
+				currentProduct = Products[ProductId];
+				Products[ProductId] = updatedProduct;
+			}
+			catch
+			{
+				if (currentProduct != null) Products[ProductId] = currentProduct;
+			}
 		}
 		public List<Product> getProducts() => Products;
 
 		public void addPart(Part newPart)
 		{
-			// TODO :: FJBO: implement validation for this method.
 			this.allParts.Add(newPart);
 		}
 		public void addParts(IEnumerable<Part> newParts)
@@ -98,7 +107,20 @@ namespace Shelves.BusinessLayer.Inventory
 
 		public List<Part> lookupParts(string searchTerm) => (List<Part>) lookupParts(getParts(), searchTerm);
 
-        public void updatePart(int partId, Part updatedPart) { }
+        public void updatePart(int partId, Part updatedPart) {
+			Part currentPart = null;
+
+			if (partId < 0 || partId >= allParts.Count) return;
+
+			try
+			{
+				currentPart = allParts[partId];
+				allParts[partId] = updatedPart;
+			} catch
+			{
+				if (currentPart != null) allParts[partId] = currentPart;
+			}
+		}
 
 		public List<Part> getParts() => allParts;
     }

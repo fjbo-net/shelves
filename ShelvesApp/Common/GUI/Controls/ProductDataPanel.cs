@@ -63,8 +63,6 @@ namespace Shelves.App.Common.GUI.Controls
 			MaxInventoryExtendedTextbox.Text = _product.getMax().ToString();
 		}
 
-
-		// TODO: FJBO: account for associated parts when reseting a product
 		public void Reset() => Product = new Product();
 
 		public void ResetGui()

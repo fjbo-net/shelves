@@ -68,6 +68,25 @@ namespace Shelves.GUI.Controls
 		protected virtual void Edit() { }
 		protected virtual void Delete() { }
 
+		
+		public ActionButton AddButton(string label)
+		{
+			ActionButton newButton = new ActionButton();
+
+			if (!string.IsNullOrEmpty(label) && !string.IsNullOrWhiteSpace(label)) newButton.Text = label;
+
+			if(AddActionButton != null)
+			{
+				newButton.Font = AddActionButton.Font;
+				newButton.BackColor = AddActionButton.BackColor;
+				newButton.ForeColor = AddActionButton.ForeColor;
+			}
+
+			ActionsPanel.Controls.Add(newButton);
+
+			return newButton;
+		}
+
 		public void ApplyColorPalette()
         {
 
@@ -88,7 +107,18 @@ namespace Shelves.GUI.Controls
 			foreach (ColumnHeader column in ListView.Columns) column.Width = ListView.Width / ListView.Columns.Count;
 		}
 
-		private void DeleteActionButton_Click(object sender, EventArgs e) => Delete();
+		private void DeleteActionButton_Click(object sender, EventArgs e)
+		{
+			var result = MessageBox.Show(
+				"Are you sure you want to delete the selected part?\nPress 'Yes' to proceed, or 'No' to cancel.",
+				$"{Text}: Confirm Deletion",
+				MessageBoxButtons.YesNo,
+				MessageBoxIcon.Exclamation);
+
+			if (result == DialogResult.No) return;
+
+			Delete();
+		}
 
 		private void EditActionButton_Click(object sender, EventArgs e) => Edit();
 

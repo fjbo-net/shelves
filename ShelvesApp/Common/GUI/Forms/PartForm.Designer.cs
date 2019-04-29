@@ -32,8 +32,8 @@
 			this.ResetActionButton = new Shelves.GUI.Controls.ActionButton();
 			this.TabControl = new System.Windows.Forms.TabControl();
 			this.InHousePage = new System.Windows.Forms.TabPage();
-			this.OutsourcedTab = new System.Windows.Forms.TabPage();
 			this.inHousePartDataPanel1 = new Shelves.App.Common.GUI.Controls.InHousePartDataPanel();
+			this.OutsourcedTab = new System.Windows.Forms.TabPage();
 			this.OutsourcedDataPanel = new Shelves.App.Common.GUI.Controls.OutsourcedDataPanel();
 			this.ActionsPanel.SuspendLayout();
 			this.mainPanel.SuspendLayout();
@@ -118,6 +118,16 @@
 			this.InHousePage.Text = "In-House";
 			this.InHousePage.UseVisualStyleBackColor = true;
 			// 
+			// inHousePartDataPanel1
+			// 
+			this.inHousePartDataPanel1.BackColor = System.Drawing.Color.Transparent;
+			this.inHousePartDataPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.inHousePartDataPanel1.Location = new System.Drawing.Point(3, 3);
+			this.inHousePartDataPanel1.Margin = new System.Windows.Forms.Padding(21, 15, 21, 15);
+			this.inHousePartDataPanel1.Name = "inHousePartDataPanel1";
+			this.inHousePartDataPanel1.Size = new System.Drawing.Size(786, 364);
+			this.inHousePartDataPanel1.TabIndex = 1;
+			// 
 			// OutsourcedTab
 			// 
 			this.OutsourcedTab.Controls.Add(this.OutsourcedDataPanel);
@@ -129,22 +139,12 @@
 			this.OutsourcedTab.Text = "Outsourced";
 			this.OutsourcedTab.UseVisualStyleBackColor = true;
 			// 
-			// inHousePartDataPanel1
-			// 
-			this.inHousePartDataPanel1.BackColor = System.Drawing.Color.Transparent;
-			this.inHousePartDataPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.inHousePartDataPanel1.Location = new System.Drawing.Point(3, 3);
-			this.inHousePartDataPanel1.Margin = new System.Windows.Forms.Padding(21, 15, 21, 15);
-			this.inHousePartDataPanel1.Name = "inHousePartDataPanel1";
-			this.inHousePartDataPanel1.Size = new System.Drawing.Size(786, 364);
-			this.inHousePartDataPanel1.TabIndex = 1;
-			// 
 			// OutsourcedDataPanel
 			// 
 			this.OutsourcedDataPanel.BackColor = System.Drawing.Color.Transparent;
 			this.OutsourcedDataPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.OutsourcedDataPanel.Location = new System.Drawing.Point(3, 3);
-			this.OutsourcedDataPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.OutsourcedDataPanel.Margin = new System.Windows.Forms.Padding(4);
 			this.OutsourcedDataPanel.Name = "OutsourcedDataPanel";
 			this.OutsourcedDataPanel.Size = new System.Drawing.Size(786, 364);
 			this.OutsourcedDataPanel.TabIndex = 0;
@@ -158,6 +158,7 @@
 			this.ClientSize = new System.Drawing.Size(800, 541);
 			this.Name = "PartForm";
 			this.Text = "PartForm";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PartForm_FormClosing);
 			this.ActionsPanel.ResumeLayout(false);
 			this.ActionsPanel.PerformLayout();
 			this.mainPanel.ResumeLayout(false);

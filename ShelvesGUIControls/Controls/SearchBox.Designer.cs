@@ -28,9 +28,19 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.SearchActionButton = new Shelves.GUI.Controls.ActionButton();
 			this.TextBox = new System.Windows.Forms.TextBox();
+			this.SearchActionButton = new Shelves.GUI.Controls.ActionButton();
 			this.SuspendLayout();
+			// 
+			// TextBox
+			// 
+			this.TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TextBox.Location = new System.Drawing.Point(6, 0);
+			this.TextBox.Margin = new System.Windows.Forms.Padding(12, 12, 3, 3);
+			this.TextBox.Name = "TextBox";
+			this.TextBox.Size = new System.Drawing.Size(203, 24);
+			this.TextBox.TabIndex = 1;
 			// 
 			// SearchActionButton
 			// 
@@ -48,16 +58,6 @@
 			this.SearchActionButton.Text = "Search";
 			this.SearchActionButton.UseVisualStyleBackColor = true;
 			// 
-			// TextBox
-			// 
-			this.TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TextBox.Location = new System.Drawing.Point(6, 0);
-			this.TextBox.Margin = new System.Windows.Forms.Padding(12, 12, 3, 3);
-			this.TextBox.Name = "TextBox";
-			this.TextBox.Size = new System.Drawing.Size(203, 24);
-			this.TextBox.TabIndex = 1;
-			// 
 			// SearchBox
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -74,7 +74,7 @@
 		}
 
 		#endregion
-		protected System.Windows.Forms.TextBox TextBox;
 		public ActionButton SearchActionButton;
+		public System.Windows.Forms.TextBox TextBox;
 	}
 }

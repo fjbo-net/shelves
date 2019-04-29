@@ -30,11 +30,11 @@
 		{
 			this.ResetActionButton = new Shelves.GUI.Controls.ActionButton();
 			this.SaveActionButton = new Shelves.GUI.Controls.ActionButton();
-			this.ProductDataPanel = new Shelves.App.Common.GUI.Controls.ProductDataPanel();
 			this.CrudPanelsFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.InventoryPartsCrudPanel = new Shelves.App.Common.GUI.Controls.PartsCrudPanel();
 			this.AssociatedPartsCrudPanel = new Shelves.App.Common.GUI.Controls.PartsCrudPanel();
 			this.FlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+			this.ProductDataPanel = new Shelves.App.Common.GUI.Controls.ProductDataPanel();
 			this.ActionsPanel.SuspendLayout();
 			this.mainPanel.SuspendLayout();
 			this.CrudPanelsFlowLayoutPanel.SuspendLayout();
@@ -99,15 +99,6 @@
 			this.SaveActionButton.UseVisualStyleBackColor = true;
 			this.SaveActionButton.Click += new System.EventHandler(this.SaveActionButton_Click);
 			// 
-			// ProductDataPanel
-			// 
-			this.ProductDataPanel.BackColor = System.Drawing.Color.Transparent;
-			this.ProductDataPanel.Location = new System.Drawing.Point(9, 8);
-			this.ProductDataPanel.Margin = new System.Windows.Forms.Padding(9, 8, 9, 8);
-			this.ProductDataPanel.Name = "ProductDataPanel";
-			this.ProductDataPanel.Size = new System.Drawing.Size(350, 262);
-			this.ProductDataPanel.TabIndex = 1;
-			// 
 			// CrudPanelsFlowLayoutPanel
 			// 
 			this.CrudPanelsFlowLayoutPanel.AutoScroll = true;
@@ -155,6 +146,15 @@
 			this.FlowLayoutPanel.Size = new System.Drawing.Size(1184, 401);
 			this.FlowLayoutPanel.TabIndex = 3;
 			// 
+			// ProductDataPanel
+			// 
+			this.ProductDataPanel.BackColor = System.Drawing.Color.Transparent;
+			this.ProductDataPanel.Location = new System.Drawing.Point(9, 8);
+			this.ProductDataPanel.Margin = new System.Windows.Forms.Padding(9, 8, 9, 8);
+			this.ProductDataPanel.Name = "ProductDataPanel";
+			this.ProductDataPanel.Size = new System.Drawing.Size(350, 262);
+			this.ProductDataPanel.TabIndex = 1;
+			// 
 			// ProductForm
 			// 
 			this.AcceptButton = this.SaveActionButton;
@@ -164,6 +164,7 @@
 			this.ClientSize = new System.Drawing.Size(1184, 541);
 			this.Name = "ProductForm";
 			this.Text = "ProductForm";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProductForm_FormClosing);
 			this.Load += new System.EventHandler(this.ProductForm_Load);
 			this.Resize += new System.EventHandler(this.ProductForm_Resize);
 			this.ActionsPanel.ResumeLayout(false);

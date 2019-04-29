@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Shelves.App.Common.GUI.Forms;
+using Shelves.BusinessLayer.Inventory;
 using Shelves.BusinessLayer.Products;
 using Shelves.GUI.Controls;
 using System.Collections;
@@ -20,14 +21,32 @@ namespace Shelves.App.Common.GUI.Controls
 		public ProductCrudPanel()
 		{
 			AddActionButton.Enabled = false;
-			AddActionButton.Click += new EventHandler(DisplayAddDialog);
-			EditActionButton.Click += new EventHandler(DisplayEditDialog);
+			AddActionButton.Click += (object sender, EventArgs e) => DisplayAddDialog();
+			EditActionButton.Click += (object sender, EventArgs e) => DisplayEditDialog();
 			InitializeComponent();
+			SearchBox.SearchActionButton.Click += (object sender, EventArgs e) => SyncListView();
+			SearchBox.TextBox.KeyPress += (object sender, KeyPressEventArgs e) =>
+			{
+				if (e.KeyChar == (char)Keys.Escape) SearchBox.Text = "";
+				SyncListView();
+				if (e.KeyChar == (char)Keys.Enter) e.Handled = true;
+			};
+
+			ListView.DoubleClick += (object sender, EventArgs e) =>
+			{
+				UpdateGUI();
+				if (ListView.SelectedIndices.Count == 1) DisplayEditDialog();
+			};
 		}
 
 		private ProductForm ProductForm = new ProductForm();
 
 		private IList<Product> DataSource { get; set; }
+
+		public bool HasLookupTerm {
+			get => !string.IsNullOrEmpty(SearchBox.Text) &&
+				!string.IsNullOrWhiteSpace(SearchBox.Text);
+		}
 
 		public int Count => DataSource.Count;
 
@@ -55,7 +74,7 @@ namespace Shelves.App.Common.GUI.Controls
 		}
 
 		public void Add(Product item) {
-			DataSource.Add(item);
+			if(!DataSource.Contains(item)) DataSource.Add(item);
 			SyncListView();
 		}
 
@@ -101,8 +120,10 @@ namespace Shelves.App.Common.GUI.Controls
 
 		private void SyncListView()
 		{
+			var source = HasLookupTerm ? Inventory.lookupProducts(DataSource, SearchBox.Text) : DataSource;
+
 			ListView.Items.Clear();
-			foreach(var product in DataSource)
+			foreach(var product in source)
 			{
 				ListViewItem item = product.ToListViewItem();
 				ListView.Items.Add(item);
@@ -111,10 +132,33 @@ namespace Shelves.App.Common.GUI.Controls
 			UpdateGUI();
 		}
 
+		public Dictionary<string, Action> UpdateGuiMethods = new Dictionary<string, Action>();
 		private void UpdateGUI()
 		{
+			string searchResultsMessage = " (search results)";
+
 			EditActionButton.Enabled = (ListView.SelectedItems.Count > 0);
-			DeleteActionButton.Enabled = (ListView.SelectedItems.Count > 0);
+
+			bool hasAssociatedParts = false;
+
+			foreach(int index in ListView.SelectedIndices)
+			{
+				if (this[index].getAssociatedParts().Count > 0) hasAssociatedParts = true;
+			}
+
+			DeleteActionButton.Enabled = (ListView.SelectedItems.Count > 0) && !hasAssociatedParts;
+
+			if(	HasLookupTerm &&
+				!HeadingLabel.Text.Contains(searchResultsMessage))
+			{
+				HeadingLabel.Text += searchResultsMessage;
+			} else if(	!HasLookupTerm &&
+						HeadingLabel.Text.Contains(searchResultsMessage))
+			{
+				HeadingLabel.Text = HeadingLabel.Text.Replace(searchResultsMessage, string.Empty);
+			}
+
+			foreach (var method in UpdateGuiMethods) method.Value();
 		}
 
 		private void ListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -123,7 +167,7 @@ namespace Shelves.App.Common.GUI.Controls
 		}
 
 
-		private void DisplayAddDialog(object sender, EventArgs e)
+		private void DisplayAddDialog()
 		{
 			ProductForm.Text = "Add Product";
 			ProductForm.ShowDialog();
@@ -134,7 +178,7 @@ namespace Shelves.App.Common.GUI.Controls
 			}
 		}
 
-		private void DisplayEditDialog(object sender, EventArgs e)
+		private void DisplayEditDialog()
 		{
 			ProductForm.Text = "Edit Product";
 			ProductForm.Product = this[ListView.SelectedIndices[0]];

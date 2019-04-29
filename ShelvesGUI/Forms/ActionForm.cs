@@ -39,6 +39,13 @@ namespace Shelves.GUI.Forms
             ApplyColorPalette();
         }
 
-        protected virtual void CloseButton_Click(object sender, EventArgs e) => Close();
+		protected virtual void CloseButton_Click(object sender, EventArgs e) {
+			DialogResult result = MessageBox.Show(
+				"Are you sure that you want to close this window? Any changes will be lost.\nPress 'Yes' to close or 'No' to cancel.",
+				$"{Title} is about to close",
+				MessageBoxButtons.YesNo,
+				MessageBoxIcon.Exclamation);
+			if(result == DialogResult.Yes) Close();
+		}
     }
 }

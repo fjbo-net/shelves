@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Shelves.BusinessLayer.Entities;
 using Shelves.BusinessLayer.Parts;
 using Shelves.BusinessLayer.Parts.Abstract;
 using Shelves.GUI.Forms;
@@ -90,8 +91,7 @@ namespace Shelves.App.Common.GUI.Forms
 			}
 
 		}
-
-
+		
 		protected override void Init()
 		{
 			base.Init();
@@ -113,10 +113,48 @@ namespace Shelves.App.Common.GUI.Forms
 			inHousePartDataPanel1.ResetGui();
 			OutsourcedDataPanel.ResetGui();
 		}
+		
+		public new ValidationResult Validate() {
+			int partTab = -1;
+
+			if (CanSwitchPartType)
+			{
+				partTab = TabControl.SelectedIndex;
+			}
+			else
+			{
+				foreach (TabPage page in TabControl.TabPages)
+				{
+					if (page.Enabled) partTab = TabControl.TabPages.IndexOf(page);
+				}
+			}
+
+			switch (partTab)
+			{
+				case (int)PartTab.Outsourced:
+					return OutsourcedDataPanel.Validate();
+				case (int)PartTab.Inhouse:
+					return inHousePartDataPanel1.Validate();
+				default:
+					return new ValidationResult(false, new List<string> { "Unkown DataPanel to validate." });
+			}
+		}
 
 
 		protected override void CloseButton_Click(object sender, EventArgs e)
 		{
+			DialogResult result = MessageBox.Show(
+				"Are you sure that you want to close this window? Any changes will be lost.\nPress 'Yes' to close or 'No' to cancel.",
+				$"{Title} is about to close...",
+				MessageBoxButtons.YesNo,
+				MessageBoxIcon.Exclamation);
+
+			if (result == DialogResult.No)
+			{
+				DialogResult = DialogResult.None;
+				return;
+			}
+
 			DialogResult = DialogResult.Cancel;
 			Reset();
 			CanSwitchPartType = true;
@@ -127,8 +165,24 @@ namespace Shelves.App.Common.GUI.Forms
 
 		private void SaveActionButton_Click(object sender, EventArgs e)
 		{
-			DialogResult = DialogResult.OK;
-			this.Hide();
+			ValidationResult result = Validate();
+
+			if (result.IsValid)
+			{
+				DialogResult = DialogResult.OK;
+				this.Hide();
+			} else
+			{
+				MessageBox.Show(result.ErrorMessagesAsString(),
+					$"{this.Title}: Invalid data",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+			}
+		}
+
+		private void PartForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (DialogResult == DialogResult.None) e.Cancel = true;
 		}
 	}
 }

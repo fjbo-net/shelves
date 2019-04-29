@@ -17,17 +17,17 @@ namespace Shelves.BusinessLayer.Parts.Abstract
 		};
 		public static readonly List<ValidationCondition<string>> NameValidationConditions = new List<ValidationCondition<string>>()
 		{
-			new ValidationCondition<string>(name => !string.IsNullOrEmpty(name), "Name must not be empty")
+			new ValidationCondition<string>(name => !string.IsNullOrEmpty(name), "Part name must not be empty.")
 		};
 		public static readonly List<ValidationCondition<double>> PriceValidationConditions = new List<ValidationCondition<double>>()
 		{
-			new ValidationCondition<double>(price => price > 0, "Price must be greater than zero")
+			new ValidationCondition<double>(price => price > 0, "Price must be greater than zero.")
 		};
 		public static readonly List<ValidationCondition<int>> MinValidationConditions = new List<ValidationCondition<int>>() {
-			new ValidationCondition<int>(min => min > 0, "Minimum value must be greater than zero")
+			new ValidationCondition<int>(min => min > 0, "Minimum inventory level value must be greater than zero.")
 		};
 		public static readonly List<ValidationCondition<int>> MaxValidationConditions = new List<ValidationCondition<int>>() {
-			new ValidationCondition<int>(max => max > 0, "Maximum value must be greater than zero")
+			new ValidationCondition<int>(max => max > 0, "Maximum inventory level value must be greater than zero")
 		};
 		protected static int LastId = 0;
 		#endregion
@@ -37,7 +37,6 @@ namespace Shelves.BusinessLayer.Parts.Abstract
 		protected int partID, inStock, min, max;
 		protected double price;
 		protected string name;
-		public List<ValidationCondition<int>> InStockValidationConditions;
 		#endregion
 
 
@@ -73,7 +72,7 @@ namespace Shelves.BusinessLayer.Parts.Abstract
 
 		public void setInStock(int newInStock)
 		{
-			if (Validation.IsValid(newInStock, this.InStockValidationConditions)) this.inStock = newInStock;
+			if (Validation.IsValid(newInStock, InStockValidationConditions(this.min, this.max))) this.inStock = newInStock;
 		}
 		public void setInStock(string newInstock)
 		{
@@ -83,7 +82,7 @@ namespace Shelves.BusinessLayer.Parts.Abstract
 		public int getInStock() => inStock;
 		public ValidationResult ValidateInStockValue(int inStockValue)
 		{
-			return Validation.Validate(inStockValue, this.InStockValidationConditions);
+			return Validation.Validate(inStockValue, InStockValidationConditions(this.min, this.max));
 		}
 		public bool IsValidInStockValue(int inStockValue) => ValidateInStockValue(inStockValue).IsValid;
 
@@ -146,15 +145,14 @@ namespace Shelves.BusinessLayer.Parts.Abstract
 		public ListViewItem ToListViewItem() => new ListViewItem(new []{this.getPartID().ToString(), this.getName(), this.getInStock().ToString(), this.getPrice().ToString("C")});
 
 
+		public static List<ValidationCondition<int>> InStockValidationConditions(int minInventoryLevel, int maxInventoryLevel) => new List<ValidationCondition<int>>()
+		{
+			new ValidationCondition<int>( inStock => inStock >= minInventoryLevel, "Inventory level must be greater or equal to the minimum stock amount."),
+			new ValidationCondition<int>( inStock => inStock <= maxInventoryLevel, "Inventory level must be less or equal to the maximum stock amount.")
+		};
+
         protected void Init()
 		{
-			this.InStockValidationConditions = new List<ValidationCondition<int>>()
-			{
-				//new ValidationCondition<int>( inStock => Validation.IsValid(this.min, Part.MinValidationConditions), "Minimum stock amount needs to be set to a valid amount."),
-				//new ValidationCondition<int>( inStock => Validation.IsValid(this.max, Part.MaxValidationConditions), "Maximum stock amount needs to be set to a valid amount."),
-				new ValidationCondition<int>( inStock => inStock >= this.min, "Inventory level must be greater or equal to the minimum stock amount."),
-				new ValidationCondition<int>( inStock => inStock <= this.max, "Inventory level must be less or equal to the maximum stock amount.")
-			};
 			this.setPartID(++Part.LastId);
 		}
 		#endregion

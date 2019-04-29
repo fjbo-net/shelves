@@ -76,17 +76,30 @@ namespace Shelves.App.Common.GUI.Controls
 			Part = newPart;
 		}
 
-		public ValidationResult Validate()
+		public new ValidationResult Validate()
 		{
 			List<string> errors = new List<string>();
 			List<ValidationResult> results = new List<ValidationResult>();
 
-			int id, inStock, min, max;
-			double price;
+			int id;
 
-			//if (int.TryParse(IdExtendedTextbox.Text, out id)) results.Add(Validation.Validate(id, Inhouse.IDValidationConditions));
+			if (!int.TryParse(MinInventoryExtendedTextbox.Text, out int min)) errors.Add("Minimum inventory level value is not a valid integer (whole number).");
+			if (!int.TryParse(MaxInventoryExtendedTextbox.Text, out int max)) errors.Add("Maximum inventory level value is not a valid integer (whole number).");
+			if (!int.TryParse(InStockExtendedTextbox.Text, out int inStock)) errors.Add("Inventory level value is not a valid integer (whole number).");
+			if (!double.TryParse(PriceExtendedTextbox.Text, out double price)) errors.Add("Price value isi not a valid double (decimal number).");
 
-			return new ValidationResult(errors.Count > 0, errors);
+			results.Add(Validation.Validate(NameExtendedTextbox.Text, Outsourced.NameValidationConditions));
+			results.Add(Validation.Validate(price, Outsourced.PriceValidationConditions));
+			results.Add(Validation.Validate(min, Outsourced.MinValidationConditions));
+			results.Add(Validation.Validate(max, Outsourced.MaxValidationConditions));
+			results.Add(Validation.Validate(inStock, Outsourced.InStockValidationConditions(min, max)));
+
+			foreach (ValidationResult result in results)
+			{
+				if (!result.IsValid) errors = errors.Concat(result.ErrorMessages).ToList();
+			}
+
+			return new ValidationResult(errors.Count == 0, errors);
 		}
 	}
 }

@@ -76,7 +76,6 @@ namespace Shelves.GUI.Controls.Controls
 						) e.Handled = true;
 					break;
 			}
-			Console.WriteLine($"Key pressed '{e.KeyChar}' [{(int)e.KeyChar}]");
 		}
 
 		[Bindable(true)]

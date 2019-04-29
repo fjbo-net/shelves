@@ -12,5 +12,14 @@ namespace Shelves.BusinessLayer.Parts
 
 
 		public Outsourced() => base.Init();
+		public Outsourced(string name, int inventoryLevel, double price, int min, int max, string companyName) : this()
+		{
+			setName(name);
+			setInStock(inventoryLevel);
+			setPrice(price);
+			setMin(min);
+			setMax(max);
+			setCompanyName(companyName);
+		}
 	}
 }

@@ -17,5 +17,14 @@ namespace Shelves.BusinessLayer.Parts
 
 
 		public Inhouse() => base.Init();
+		public Inhouse(string name, int inventoryLevel, double price, int min, int max, int machineId) : this()
+		{
+			setName(name);
+			setPrice(price);
+			setMin(min);
+			setMax(max);
+			setInStock(inventoryLevel);
+			setMachineID(machineId);
+		}
 	}
 }

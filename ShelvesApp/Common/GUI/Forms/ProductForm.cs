@@ -10,9 +10,11 @@ using System.Windows.Forms;
 
 using Shelves.App.Common.GUI.Controls;
 using Shelves.BusinessLayer.Inventory;
+using Shelves.BusinessLayer.Entities;
 using Shelves.BusinessLayer.Parts.Abstract;
 using Shelves.BusinessLayer.Products;
 using Shelves.GUI.Colors;
+using Shelves.GUI.Controls;
 using Shelves.GUI.Controls.Entities;
 using Shelves.GUI.Forms;
 
@@ -24,6 +26,37 @@ namespace Shelves.App.Common.GUI.Forms
 		{
 			InitializeComponent();
 			Init();
+
+			IList<Part> allParts = Inventory.Instance.getParts();
+			InventoryPartsCrudPanel.BindTo(ref allParts);
+			
+			AssociatedPartsCrudPanel.AddActionButton.Hide();
+
+			var attachButton = InventoryPartsCrudPanel.AddButton("Associate");
+			attachButton.Enabled = false;
+
+			attachButton.Click += (object clickSender, EventArgs clickEvent) =>
+			{
+				foreach (int index in InventoryPartsCrudPanel.SelectedIndices)
+				{
+					if (index < 0) continue;
+					var part = InventoryPartsCrudPanel[index];
+					if (part != null) AssociatedPartsCrudPanel.Add(part);
+				}
+			};
+
+			if (!InventoryPartsCrudPanel.UpdateGuiMethods.ContainsKey("AttachButtonToggle")) InventoryPartsCrudPanel.UpdateGuiMethods.Add("AttachButtonToggle", () => {
+				bool enableButton = InventoryPartsCrudPanel.SelectedIndices.Count > 0;
+
+				foreach(int index in InventoryPartsCrudPanel.SelectedIndices)
+				{
+					if (index < 0) continue;
+					var part = InventoryPartsCrudPanel[index];
+					if (AssociatedPartsCrudPanel.Contains(part)) enableButton = false;
+				}
+
+				attachButton.Enabled =  enableButton;
+			});
 		}
 
 		public Product Product
@@ -120,9 +153,23 @@ namespace Shelves.App.Common.GUI.Forms
 		public void Reset() => ProductDataPanel.Reset();
 		public void ResetGui() => ProductDataPanel.ResetGui();
 
+		public new ValidationResult Validate() => ProductDataPanel.Validate();
+
 
 		protected override void CloseButton_Click(object sender, EventArgs e)
 		{
+			DialogResult result = MessageBox.Show(
+						"Are you sure that you want to close this window? Any changes will be lost.\nPress 'Yes' to close or 'No' to cancel.",
+						$"{Title} is about to close...",
+						MessageBoxButtons.YesNo,
+						MessageBoxIcon.Exclamation);
+
+			if (result == DialogResult.No)
+			{
+				DialogResult = DialogResult.None;
+				return;
+			}
+
 			DialogResult = DialogResult.Cancel;
 			ProductDataPanel.Reset();
 			this.Hide();
@@ -132,8 +179,20 @@ namespace Shelves.App.Common.GUI.Forms
 
 		private void SaveActionButton_Click(object sender, EventArgs e)
 		{
-			DialogResult = DialogResult.OK;
-			this.Hide();
+			var validationResut = Validate();
+
+			if (validationResut.IsValid)
+			{
+				DialogResult = DialogResult.OK;
+				this.Hide();
+			}
+			else
+			{
+				MessageBox.Show(validationResut.ErrorMessagesAsString(),
+								$"{this.Title}: Invalid data",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Error);
+			}
 		}
 
 		private void ProductForm_Resize(object sender, EventArgs e) => ParentControl_Resize(sender, e);
@@ -141,8 +200,25 @@ namespace Shelves.App.Common.GUI.Forms
 		private void ProductForm_Load(object sender, EventArgs e)
 		{
 			DefineDynamicResizables();
+			
+			IList<Part> associatedParts = Product.getAssociatedParts();
+			IList<Part> partsToRemove = new List<Part>();
 
-			IList<Part> parts = Inventory.Instance.getParts();
+			var allParts = Inventory.Instance.getParts();
+			
+			foreach (Part part in associatedParts)
+			{
+				if (!allParts.Contains(part)) partsToRemove.Add(part);
+			}
+
+			foreach (Part part in partsToRemove) associatedParts.Remove(part);
+
+			AssociatedPartsCrudPanel.BindTo(ref associatedParts);
+		}
+
+		private void ProductForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (DialogResult == DialogResult.None) e.Cancel = true;
 		}
 	}
 }

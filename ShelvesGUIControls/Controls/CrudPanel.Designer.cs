@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
 			this.HeaderPanel = new System.Windows.Forms.Panel();
+			this.HeadingLabel = new Shelves.GUI.Controls.HeadingLabel();
 			this.ContentPanel = new System.Windows.Forms.Panel();
 			this.ListView = new System.Windows.Forms.ListView();
 			this.ActionsPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.DeleteActionButton = new Shelves.GUI.Controls.ActionButton();
 			this.EditActionButton = new Shelves.GUI.Controls.ActionButton();
 			this.AddActionButton = new Shelves.GUI.Controls.ActionButton();
-			this.HeadingLabel = new Shelves.GUI.Controls.HeadingLabel();
 			this.HeaderPanel.SuspendLayout();
 			this.ContentPanel.SuspendLayout();
 			this.ActionsPanel.SuspendLayout();
@@ -50,6 +50,17 @@
 			this.HeaderPanel.Name = "HeaderPanel";
 			this.HeaderPanel.Size = new System.Drawing.Size(480, 32);
 			this.HeaderPanel.TabIndex = 0;
+			// 
+			// HeadingLabel
+			// 
+			this.HeadingLabel.AutoSize = true;
+			this.HeadingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.HeadingLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(247)))), ((int)(((byte)(247)))));
+			this.HeadingLabel.Location = new System.Drawing.Point(-5, 0);
+			this.HeadingLabel.Name = "HeadingLabel";
+			this.HeadingLabel.Size = new System.Drawing.Size(133, 25);
+			this.HeadingLabel.TabIndex = 0;
+			this.HeadingLabel.Text = "CRUD Panel";
 			// 
 			// ContentPanel
 			// 
@@ -147,17 +158,6 @@
 			this.AddActionButton.UseVisualStyleBackColor = false;
 			this.AddActionButton.Click += new System.EventHandler(this.AddActionButton_Click);
 			// 
-			// HeadingLabel
-			// 
-			this.HeadingLabel.AutoSize = true;
-			this.HeadingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.HeadingLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(247)))), ((int)(((byte)(247)))));
-			this.HeadingLabel.Location = new System.Drawing.Point(-5, 0);
-			this.HeadingLabel.Name = "HeadingLabel";
-			this.HeadingLabel.Size = new System.Drawing.Size(133, 25);
-			this.HeadingLabel.TabIndex = 0;
-			this.HeadingLabel.Text = "CRUD Panel";
-			// 
 			// CrudPanel
 			// 
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
@@ -180,11 +180,11 @@
 
         protected System.Windows.Forms.Panel HeaderPanel;
         protected System.Windows.Forms.Panel ContentPanel;
-        protected System.Windows.Forms.FlowLayoutPanel ActionsPanel;
         protected HeadingLabel HeadingLabel;
-        protected ActionButton AddActionButton;
-        protected ActionButton EditActionButton;
-        protected ActionButton DeleteActionButton;
 		protected System.Windows.Forms.ListView ListView;
+		public System.Windows.Forms.FlowLayoutPanel ActionsPanel;
+		public ActionButton AddActionButton;
+		public ActionButton EditActionButton;
+		public ActionButton DeleteActionButton;
 	}
 }

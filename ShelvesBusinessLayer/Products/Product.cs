@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
@@ -16,13 +17,6 @@ namespace Shelves.BusinessLayer.Products
 		#region Constructors
 		public Product()
 		{
-			this.InStockValidationConditions = new List<ValidationCondition<int>>()
-			{
-				//new ValidationCondition<int>( inStock => Validation.IsValid(this.min, Product.MinValidationConditions), "Minimum stock amount needs to be set to a valid amount."),
-				//new ValidationCondition<int>( inStock => Validation.IsValid(this.max, Product.MaxValidationConditions), "Maximum stock amount needs to be set to a valid amount."),
-				new ValidationCondition<int>( inStock => inStock >= this.min, "Inventory level must be greater or equal to the minimum stock amount."),
-				new ValidationCondition<int>( inStock => inStock <= this.max, "Inventory level must be less or equal to the maximum stock amount.")
-			};
 			setID(++Product.LastId);
 		}
 
@@ -45,18 +39,23 @@ namespace Shelves.BusinessLayer.Products
 		};
 		public static readonly List<ValidationCondition<string>> NameValidationConditions = new List<ValidationCondition<string>>()
 		{
-			new ValidationCondition<string>(name => !string.IsNullOrEmpty(name), "Name must not be empty")
+			new ValidationCondition<string>(name => !string.IsNullOrEmpty(name), "Name must not be empty.")
 		};
 		public static readonly List<ValidationCondition<double>> PriceValidationConditions = new List<ValidationCondition<double>>()
 		{
-			new ValidationCondition<double>(price => price > 0, "Price must be greater than zero")
+			new ValidationCondition<double>(price => price > 0, "Price value be greater than zero.")
 		};
 		public static readonly List<ValidationCondition<int>> MinValidationConditions = new List<ValidationCondition<int>>() {
-			new ValidationCondition<int>(min => min > 0, "Minimum value must be greater than zero")
+			new ValidationCondition<int>(min => min > 0, "Minimum inventory level value must be greater than zero.")
 		};
 		public static readonly List<ValidationCondition<int>> MaxValidationConditions = new List<ValidationCondition<int>>() {
-			new ValidationCondition<int>(max => max > 0, "Maximum value must be greater than zero")
+			new ValidationCondition<int>(max => max > 0, "Maximum inventory level value must be greater than zero.")
 		};
+		public static readonly List<ValidationCondition<List<Part>>> AssociatedPartsValidationConditions = new List<ValidationCondition<List<Part>>>()
+		{
+			new ValidationCondition<List<Part>>(partsList => partsList.Count > 0, "Product must have at least an associated part.")
+		};
+
 		public static DataTable InitializeDataTable()
 		{
 			DataTable productDataTable = new DataTable();
@@ -73,11 +72,10 @@ namespace Shelves.BusinessLayer.Products
 
 
 		#region Properties
-		private List<Part> associatedParts;
+		private List<Part> associatedParts = new List<Part>();
 		private int productID, inStock, min, max;
 		private double price;
 		private string name;
-		private List<ValidationCondition<int>> InStockValidationConditions;
 		#endregion
 
 
@@ -101,7 +99,7 @@ namespace Shelves.BusinessLayer.Products
 
 		public void setInStock(int newInStock)
 		{
-			if (Validation.IsValid(newInStock, this.InStockValidationConditions)) this.inStock = newInStock;
+			if (Validation.IsValid(newInStock, InStockValidationConditions(this.min, this.max))) this.inStock = newInStock;
 		}
 		public void setInStock(string newInStock)
 		{
@@ -132,9 +130,30 @@ namespace Shelves.BusinessLayer.Products
 		}
 		public int getMax() => max;
 
-		public void addAssociatedPart(Part newPart) { }
-		public Part removeAssociatedPart(int byPartId) { return new Inhouse(); }
-		public Part lookupAssociatedPart(int byPartId) { return new Inhouse(); }
+		public void addAssociatedPart(Part newPart) => associatedParts.Add(newPart);
+		public bool removeAssociatedPart(int byPartId)
+		{
+			try
+			{
+				associatedParts.RemoveAt(byPartId);
+				return true;
+			} catch
+			{
+				return false;
+			}
+		}
+		public Part lookupAssociatedPart(int byPartId)
+		{
+			try
+			{
+				return associatedParts.Where(part => part.getID() == byPartId).Single();
+			} catch
+			{
+				return null;
+			}
+			
+		}
+		public List<Part> getAssociatedParts() => associatedParts;
 
 		public void setProductID(int newProductID)
 		{
@@ -165,13 +184,17 @@ namespace Shelves.BusinessLayer.Products
 
 		public ListViewItem ToListViewItem() => new ListViewItem(new[] { this.getProductID().ToString(), this.getName(), this.getInStock().ToString(), this.getPrice().ToString("C") });
 
+		public static List<ValidationCondition<int>> InStockValidationConditions(int minInventoryLevel, int maxInventoryLevel) => new List<ValidationCondition<int>>() {
+			new ValidationCondition<int>( inStock => inStock >= minInventoryLevel, "Inventory level must be greater or equal to the minimum stock amount."),
+				new ValidationCondition<int>( inStock => inStock <= maxInventoryLevel, "Inventory level must be less or equal to the maximum stock amount.")
+		};
 
-		#region Interface Methods
-		public bool Equals(Product other)
-			{
-				if (other == null) return false;
-				return (this.productID == other.productID);
-			}
+			#region Interface Methods
+				public bool Equals(Product other)
+				{
+					if (other == null) return false;
+					return (this.productID == other.productID);
+				}
 			#endregion
 		#endregion
 	}

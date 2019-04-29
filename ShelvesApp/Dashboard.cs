@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Shelves.BusinessLayer.Parts.Abstract;
+using Shelves.BusinessLayer.Parts;
 using Shelves.BusinessLayer.Inventory;
 using Shelves.BusinessLayer.Products;
 using Shelves.GUI.Controls;
@@ -26,8 +27,18 @@ namespace Shelves.App
 			Inventory.addProducts(new List<Product> {
 				new Product(1,"Product 1", 5, 100, 20, 5.00),
 				new Product(2, "Product 2", 5, 100, 20, 10.00)});
+
+			Inventory.addParts(new List<Part> {
+				new Inhouse("InHouse 1", 100, 10.10, 10, 1000, 101010),
+				new Outsourced("Outsourced 2", 200, 20.20, 20, 2000, "FJBO"),
+				new Inhouse("InHouse 2", 300, 30.30, 30, 3000, 303030)
+			});
+
 			InitializeComponent();
 			Init();
+
+
+
 		}
 
 		#region Properties

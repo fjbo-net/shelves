@@ -77,18 +77,32 @@ namespace Shelves.App.Common.GUI.Controls
 		}
 
 
-		public ValidationResult Validate()
+		public new ValidationResult Validate()
 		{
 			List<string> errors = new List<string>();
 			List<ValidationResult> results = new List<ValidationResult>();
 
-			int id, inStock, min, max;
-			double price;
+			int id;
+			
+			if (!int.TryParse(MinInventoryExtendedTextbox.Text, out int min)) errors.Add($"Value \"{MinInventoryExtendedTextbox.Text}\" is not a valid integer value (whole number).");
+			if (!int.TryParse(MaxInventoryExtendedTextbox.Text, out int max)) errors.Add($"Value \"{MaxInventoryExtendedTextbox.Text}\" is not a valid integer value (whole number).");
+			if (!int.TryParse(InStockExtendedTextbox.Text, out int inStock)) errors.Add($"Value \"{InStockExtendedTextbox.Text}\" is not a valid integer value (whole number).");
+			if (!double.TryParse(PriceExtendedTextbox.Text, out double price)) errors.Add($"Value \"{InStockExtendedTextbox.Text}\" is not a valid double value (decimal number).");
 
-			//if (int.TryParse(IdExtendedTextbox.Text, out id)) results.Add(Validation.Validate(id, Product.I));
-			//if (int.TryParse(IdExtendedTextbox.Text, out id)) results.Add(Validation.Validate(id, Product));
+			results.Add(Validation.Validate(NameExtendedTextbox.Text, Product.NameValidationConditions));
+			results.Add(Validation.Validate(price, Product.PriceValidationConditions));
+			results.Add(Validation.Validate(min, Product.MinValidationConditions));
+			results.Add(Validation.Validate(max, Product.MaxValidationConditions));
+			results.Add(Validation.Validate(inStock, Product.InStockValidationConditions(min, max)));
 
-			return new ValidationResult(errors.Count > 0, errors);
+			results.Add(Validation.Validate(_product.getAssociatedParts(), Product.AssociatedPartsValidationConditions));
+
+			foreach(ValidationResult result in results)
+			{
+				if (!result.IsValid) errors = errors.Concat(result.ErrorMessages).ToList();
+			}
+
+			return new ValidationResult(errors.Count == 0, errors);
 		}
 	}
 }

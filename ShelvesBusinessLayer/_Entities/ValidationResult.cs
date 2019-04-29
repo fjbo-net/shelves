@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace Shelves.BusinessLayer.Entities
 {
@@ -17,6 +18,15 @@ namespace Shelves.BusinessLayer.Entities
 		/// This value should be assigned only during the instantiation of the class.
 		/// </summary>
 		public readonly List<string> ErrorMessages;
+
+
+		public string ErrorMessagesAsString(bool multiLine = true) {
+			StringBuilder builder = new StringBuilder();
+
+			foreach (string message in ErrorMessages) builder.AppendLine(message);
+
+			return builder.ToString().Trim();
+		}
 
 		/// <summary>
 		/// Creates an instance of a validation result. Usually used by the Validation helper, but could be used somewhere else.
